@@ -1,0 +1,2770 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 1300px;
+            height: 831px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script src="data/PARN_TAGIRN_Syndicat_bv_Alpes_2154_0.js"></script>
+        <script src="data/PARN_TAGIRN_PNR_Alpes_2154_1.js"></script>
+        <script src="data/PARN_TAGIRN_EPCI_Alpes_2154_2.js"></script>
+        <script src="data/PARN_STePRIM_Alpes_2154_3.js"></script>
+        <script src="data/GEORISQUE_PAPI_Alpes_2154_4.js"></script>
+        <script src="data/GASPAR_PCS_Alpes_2154_5.js"></script>
+        <script src="data/GASPAR_DICRIM_Alpes_2154_6.js"></script>
+        <script src="data/PARN_Emprise_Alpes_2154_7.js"></script>
+        <script src="data/Departements_8.js"></script>
+        <script src="data/Communes_9.js"></script>
+        <script src="data/GASPAR_Seismes_DDRM_Alpes_2154_10.js"></script>
+        <script src="data/NombredvnementsarrtsCATNATparcommune_11.js"></script>
+        <script src="data/IntensitpicentralesurlchelleMSK1964_12.js"></script>
+        <script src="data/Stationsmeteopredictionavalanche_13.js"></script>
+        <script src="data/NombredvnementsarrtsCATNATparcommune_14.js"></script>
+        <script src="data/BDIFF_FeuForet_Evmnts_Alpes_2154_15.js"></script>
+        <script src="data/GASPAR_FeuForet_DDRM_Alpes_2154_16.js"></script>
+        <script src="data/GEOIDES_Facteur_risque_incendie_Alpes_2154_17.js"></script>
+        <script src="data/NombredvnementsarrtsCATNATparcommune_18.js"></script>
+        <script src="data/BRGM_Inondation_RemonteesNappe_Alpes_2154_19.js"></script>
+        <script src="data/GASPAR_Inondation_DDRM_Alpes_2154_20.js"></script>
+        <script src="data/GASPAR_Avalanche_DDRM_Alpes_2154_21.js"></script>
+        <script src="data/CLPA_photo_22.js"></script>
+        <script src="data/CLPA_temoignage_23.js"></script>
+        <script src="data/CLPA_Avalanche_Ouvrages_Alpes_2154_24.js"></script>
+        <script src="data/GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25.js"></script>
+        <script src="data/GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26.js"></script>
+        <script src="data/GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27.js"></script>
+        <script src="data/GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28.js"></script>
+        <script src="data/GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29.js"></script>
+        <script src="data/NombredvnementsarrtsCATNATparcommune_30.js"></script>
+        <script src="data/NombredeglissementdeterrainparcommuneBDMVT_31.js"></script>
+        <script src="data/NombredboulementparcommuneBDMVT_32.js"></script>
+        <script src="data/NombredecouledeboueparcommuneBDMVT_33.js"></script>
+        <script src="data/NombredaffaissementparcommuneBDMVT_34.js"></script>
+        <script>
+        var crs = new L.Proj.CRS('IGNF:LAMB93', '+proj=lcc +lat_0=46.5 +lon_0=3 +lat_1=44 +lat_2=49 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs', {
+            resolutions: [2800, 1400, 700, 350, 175, 84, 42, 21, 11.2, 5.6, 2.8, 1.4, 0.7, 0.35, 0.14, 0.07],
+        });
+        var map = L.map('map', {
+            crs: crs,
+            continuousWorld: false,
+            worldCopyJump: false, 
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[42.994850357621246,3.546720205044987],[46.30662130979394,10.511513838843888]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM'] !== null ? autolinker.link(feature.properties['NOM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SIGLE'] !== null ? autolinker.link(feature.properties['SIGLE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0_0() {
+            return {
+                pane: 'pane_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,178,151,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0');
+        map.getPane('pane_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0').style.zIndex = 400;
+        map.getPane('pane_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0').style['mix-blend-mode'] = 'normal';
+        var layer_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0 = new L.geoJson(json_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0',
+            layerName: 'layer_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0',
+            pane: 'pane_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0',
+            onEachFeature: pop_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0,
+            style: style_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0_0,
+        });
+        bounds_group.addLayer(layer_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0);
+        function pop_PARN_TAGIRN_PNR_Alpes_2154_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Sigle'] !== null ? autolinker.link(feature.properties['Sigle'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM'] !== null ? autolinker.link(feature.properties['NOM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PARN_TAGIRN_PNR_Alpes_2154_1_0() {
+            return {
+                pane: 'pane_PARN_TAGIRN_PNR_Alpes_2154_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,60,57,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PARN_TAGIRN_PNR_Alpes_2154_1');
+        map.getPane('pane_PARN_TAGIRN_PNR_Alpes_2154_1').style.zIndex = 401;
+        map.getPane('pane_PARN_TAGIRN_PNR_Alpes_2154_1').style['mix-blend-mode'] = 'normal';
+        var layer_PARN_TAGIRN_PNR_Alpes_2154_1 = new L.geoJson(json_PARN_TAGIRN_PNR_Alpes_2154_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PARN_TAGIRN_PNR_Alpes_2154_1',
+            layerName: 'layer_PARN_TAGIRN_PNR_Alpes_2154_1',
+            pane: 'pane_PARN_TAGIRN_PNR_Alpes_2154_1',
+            onEachFeature: pop_PARN_TAGIRN_PNR_Alpes_2154_1,
+            style: style_PARN_TAGIRN_PNR_Alpes_2154_1_0,
+        });
+        bounds_group.addLayer(layer_PARN_TAGIRN_PNR_Alpes_2154_1);
+        function pop_PARN_TAGIRN_EPCI_Alpes_2154_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SIGLE'] !== null ? autolinker.link(feature.properties['SIGLE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_EPCI'] !== null ? autolinker.link(feature.properties['ID_EPCI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_DEPT'] !== null ? autolinker.link(feature.properties['NOM_DEPT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_REGION'] !== null ? autolinker.link(feature.properties['NOM_REGION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['raison_soc'] !== null ? autolinker.link(feature.properties['raison_soc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PARN_TAGIRN_EPCI_Alpes_2154_2_0() {
+            return {
+                pane: 'pane_PARN_TAGIRN_EPCI_Alpes_2154_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PARN_TAGIRN_EPCI_Alpes_2154_2');
+        map.getPane('pane_PARN_TAGIRN_EPCI_Alpes_2154_2').style.zIndex = 402;
+        map.getPane('pane_PARN_TAGIRN_EPCI_Alpes_2154_2').style['mix-blend-mode'] = 'normal';
+        var layer_PARN_TAGIRN_EPCI_Alpes_2154_2 = new L.geoJson(json_PARN_TAGIRN_EPCI_Alpes_2154_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PARN_TAGIRN_EPCI_Alpes_2154_2',
+            layerName: 'layer_PARN_TAGIRN_EPCI_Alpes_2154_2',
+            pane: 'pane_PARN_TAGIRN_EPCI_Alpes_2154_2',
+            onEachFeature: pop_PARN_TAGIRN_EPCI_Alpes_2154_2,
+            style: style_PARN_TAGIRN_EPCI_Alpes_2154_2_0,
+        });
+        bounds_group.addLayer(layer_PARN_TAGIRN_EPCI_Alpes_2154_2);
+        function pop_PARN_STePRIM_Alpes_2154_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_EPCI'] !== null ? autolinker.link(feature.properties['ID_EPCI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_DEPT'] !== null ? autolinker.link(feature.properties['NOM_DEPT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_REGION'] !== null ? autolinker.link(feature.properties['NOM_REGION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['raison_soc'] !== null ? autolinker.link(feature.properties['raison_soc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Population'] !== null ? autolinker.link(feature.properties['Population'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['envie_proj'] !== null ? autolinker.link(feature.properties['envie_proj'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['intention'] !== null ? autolinker.link(feature.properties['intention'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['validation'] !== null ? autolinker.link(feature.properties['validation'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PARN_STePRIM_Alpes_2154_3_0() {
+            return {
+                pane: 'pane_PARN_STePRIM_Alpes_2154_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PARN_STePRIM_Alpes_2154_3');
+        map.getPane('pane_PARN_STePRIM_Alpes_2154_3').style.zIndex = 403;
+        map.getPane('pane_PARN_STePRIM_Alpes_2154_3').style['mix-blend-mode'] = 'normal';
+        var layer_PARN_STePRIM_Alpes_2154_3 = new L.geoJson(json_PARN_STePRIM_Alpes_2154_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PARN_STePRIM_Alpes_2154_3',
+            layerName: 'layer_PARN_STePRIM_Alpes_2154_3',
+            pane: 'pane_PARN_STePRIM_Alpes_2154_3',
+            onEachFeature: pop_PARN_STePRIM_Alpes_2154_3,
+            style: style_PARN_STePRIM_Alpes_2154_3_0,
+        });
+        bounds_group.addLayer(layer_PARN_STePRIM_Alpes_2154_3);
+        function pop_GEORISQUE_PAPI_Alpes_2154_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PAPI _PAPI'] !== null ? autolinker.link(feature.properties['PAPI _PAPI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PAPI _Co_1'] !== null ? autolinker.link(feature.properties['PAPI _Co_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GEORISQUE_PAPI_Alpes_2154_4_0() {
+            return {
+                pane: 'pane_GEORISQUE_PAPI_Alpes_2154_4',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GEORISQUE_PAPI_Alpes_2154_4');
+        map.getPane('pane_GEORISQUE_PAPI_Alpes_2154_4').style.zIndex = 404;
+        map.getPane('pane_GEORISQUE_PAPI_Alpes_2154_4').style['mix-blend-mode'] = 'normal';
+        var layer_GEORISQUE_PAPI_Alpes_2154_4 = new L.geoJson(json_GEORISQUE_PAPI_Alpes_2154_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GEORISQUE_PAPI_Alpes_2154_4',
+            layerName: 'layer_GEORISQUE_PAPI_Alpes_2154_4',
+            pane: 'pane_GEORISQUE_PAPI_Alpes_2154_4',
+            onEachFeature: pop_GEORISQUE_PAPI_Alpes_2154_4,
+            style: style_GEORISQUE_PAPI_Alpes_2154_4_0,
+        });
+        bounds_group.addLayer(layer_GEORISQUE_PAPI_Alpes_2154_4);
+        function pop_GASPAR_PCS_Alpes_2154_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE_DEPT'] !== null ? autolinker.link(feature.properties['CODE_DEPT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_DEPT'] !== null ? autolinker.link(feature.properties['NOM_DEPT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_nat_pc'] !== null ? autolinker.link(feature.properties['cod_nat_pc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dat_maj'] !== null ? autolinker.link(feature.properties['dat_maj'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_PCS_Alpes_2154_5_0() {
+            return {
+                pane: 'pane_GASPAR_PCS_Alpes_2154_5',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,113,72,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_PCS_Alpes_2154_5');
+        map.getPane('pane_GASPAR_PCS_Alpes_2154_5').style.zIndex = 405;
+        map.getPane('pane_GASPAR_PCS_Alpes_2154_5').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_PCS_Alpes_2154_5 = new L.geoJson(json_GASPAR_PCS_Alpes_2154_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_PCS_Alpes_2154_5',
+            layerName: 'layer_GASPAR_PCS_Alpes_2154_5',
+            pane: 'pane_GASPAR_PCS_Alpes_2154_5',
+            onEachFeature: pop_GASPAR_PCS_Alpes_2154_5,
+            style: style_GASPAR_PCS_Alpes_2154_5_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_PCS_Alpes_2154_5);
+        function pop_GASPAR_DICRIM_Alpes_2154_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_GEOFLA'] !== null ? autolinker.link(feature.properties['ID_GEOFLA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE_DEPT'] !== null ? autolinker.link(feature.properties['CODE_DEPT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_DEPT'] !== null ? autolinker.link(feature.properties['NOM_DEPT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dat_publi_'] !== null ? autolinker.link(feature.properties['dat_publi_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_DICRIM_Alpes_2154_6_0() {
+            return {
+                pane: 'pane_GASPAR_DICRIM_Alpes_2154_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_DICRIM_Alpes_2154_6');
+        map.getPane('pane_GASPAR_DICRIM_Alpes_2154_6').style.zIndex = 406;
+        map.getPane('pane_GASPAR_DICRIM_Alpes_2154_6').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_DICRIM_Alpes_2154_6 = new L.geoJson(json_GASPAR_DICRIM_Alpes_2154_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_DICRIM_Alpes_2154_6',
+            layerName: 'layer_GASPAR_DICRIM_Alpes_2154_6',
+            pane: 'pane_GASPAR_DICRIM_Alpes_2154_6',
+            onEachFeature: pop_GASPAR_DICRIM_Alpes_2154_6,
+            style: style_GASPAR_DICRIM_Alpes_2154_6_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_DICRIM_Alpes_2154_6);
+        function pop_PARN_Emprise_Alpes_2154_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MASSIF'] !== null ? autolinker.link(feature.properties['MASSIF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PARN_Emprise_Alpes_2154_7_0() {
+            return {
+                pane: 'pane_PARN_Emprise_Alpes_2154_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_PARN_Emprise_Alpes_2154_7');
+        map.getPane('pane_PARN_Emprise_Alpes_2154_7').style.zIndex = 407;
+        map.getPane('pane_PARN_Emprise_Alpes_2154_7').style['mix-blend-mode'] = 'normal';
+        var layer_PARN_Emprise_Alpes_2154_7 = new L.geoJson(json_PARN_Emprise_Alpes_2154_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_PARN_Emprise_Alpes_2154_7',
+            layerName: 'layer_PARN_Emprise_Alpes_2154_7',
+            pane: 'pane_PARN_Emprise_Alpes_2154_7',
+            onEachFeature: pop_PARN_Emprise_Alpes_2154_7,
+            style: style_PARN_Emprise_Alpes_2154_7_0,
+        });
+        bounds_group.addLayer(layer_PARN_Emprise_Alpes_2154_7);
+        map.addLayer(layer_PARN_Emprise_Alpes_2154_7);
+        function pop_Departements_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE_DEP'] !== null ? autolinker.link(feature.properties['CODE_DEP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMDEP_MAJ'] !== null ? autolinker.link(feature.properties['NOMDEP_MAJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE_REG'] !== null ? autolinker.link(feature.properties['CODE_REG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE_CHF'] !== null ? autolinker.link(feature.properties['CODE_CHF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CHF_MAJ'] !== null ? autolinker.link(feature.properties['CHF_MAJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Departements_8_0() {
+            return {
+                pane: 'pane_Departements_8',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Departements_8');
+        map.getPane('pane_Departements_8').style.zIndex = 408;
+        map.getPane('pane_Departements_8').style['mix-blend-mode'] = 'normal';
+        var layer_Departements_8 = new L.geoJson(json_Departements_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Departements_8',
+            layerName: 'layer_Departements_8',
+            pane: 'pane_Departements_8',
+            onEachFeature: pop_Departements_8,
+            style: style_Departements_8_0,
+        });
+        bounds_group.addLayer(layer_Departements_8);
+        map.addLayer(layer_Departements_8);
+        function pop_Communes_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">ID_GEOFLA</th>\
+                        <td>' + (feature.properties['ID_GEOFLA'] !== null ? autolinker.link(feature.properties['ID_GEOFLA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE_COM'] !== null ? autolinker.link(feature.properties['CODE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X_CHF_LIEU'] !== null ? autolinker.link(feature.properties['X_CHF_LIEU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Y_CHF_LIEU'] !== null ? autolinker.link(feature.properties['Y_CHF_LIEU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Z_MOYEN'] !== null ? autolinker.link(feature.properties['Z_MOYEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE_REG'] !== null ? autolinker.link(feature.properties['CODE_REG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_REG'] !== null ? autolinker.link(feature.properties['NOM_REG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Communes_9_0() {
+            return {
+                pane: 'pane_Communes_9',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.40784313725490196)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Communes_9');
+        map.getPane('pane_Communes_9').style.zIndex = 409;
+        map.getPane('pane_Communes_9').style['mix-blend-mode'] = 'normal';
+        var layer_Communes_9 = new L.geoJson(json_Communes_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Communes_9',
+            layerName: 'layer_Communes_9',
+            pane: 'pane_Communes_9',
+            onEachFeature: pop_Communes_9,
+            style: style_Communes_9_0,
+        });
+        bounds_group.addLayer(layer_Communes_9);
+        map.addLayer(layer_Communes_9);
+        function pop_GASPAR_Seismes_DDRM_Alpes_2154_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SURF_KM2'] !== null ? autolinker.link(feature.properties['SURF_KM2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_Seismes_DDRM_Alpes_2154_10_0(feature) {
+            switch(String(feature.properties['lib_risque'])) {
+                case 'SÃ©isme zone de sismicite 2':
+                    return {
+                pane: 'pane_GASPAR_Seismes_DDRM_Alpes_2154_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,143,128,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SÃ©isme zone de sismicite 3':
+                    return {
+                pane: 'pane_GASPAR_Seismes_DDRM_Alpes_2154_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,49,24,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'SÃ©isme zone de sismicite 4':
+                    return {
+                pane: 'pane_GASPAR_Seismes_DDRM_Alpes_2154_10',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,37,18,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_GASPAR_Seismes_DDRM_Alpes_2154_10');
+        map.getPane('pane_GASPAR_Seismes_DDRM_Alpes_2154_10').style.zIndex = 410;
+        map.getPane('pane_GASPAR_Seismes_DDRM_Alpes_2154_10').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_Seismes_DDRM_Alpes_2154_10 = new L.geoJson(json_GASPAR_Seismes_DDRM_Alpes_2154_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_Seismes_DDRM_Alpes_2154_10',
+            layerName: 'layer_GASPAR_Seismes_DDRM_Alpes_2154_10',
+            pane: 'pane_GASPAR_Seismes_DDRM_Alpes_2154_10',
+            onEachFeature: pop_GASPAR_Seismes_DDRM_Alpes_2154_10,
+            style: style_GASPAR_Seismes_DDRM_Alpes_2154_10_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_Seismes_DDRM_Alpes_2154_10);
+        function pop_NombredvnementsarrtsCATNATparcommune_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SURF_KM2'] !== null ? autolinker.link(feature.properties['SURF_KM2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredvnementsarrtsCATNATparcommune_11_0(feature) {
+            switch(String(feature.properties['NOMBRE'])) {
+                case '1':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,213,207,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,143,128,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,49,24,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '9':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_11',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(180,37,18,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_NombredvnementsarrtsCATNATparcommune_11');
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_11').style.zIndex = 411;
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_11').style['mix-blend-mode'] = 'normal';
+        var layer_NombredvnementsarrtsCATNATparcommune_11 = new L.geoJson(json_NombredvnementsarrtsCATNATparcommune_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredvnementsarrtsCATNATparcommune_11',
+            layerName: 'layer_NombredvnementsarrtsCATNATparcommune_11',
+            pane: 'pane_NombredvnementsarrtsCATNATparcommune_11',
+            onEachFeature: pop_NombredvnementsarrtsCATNATparcommune_11,
+            style: style_NombredvnementsarrtsCATNATparcommune_11_0,
+        });
+        bounds_group.addLayer(layer_NombredvnementsarrtsCATNATparcommune_11);
+        function pop_IntensitpicentralesurlchelleMSK1964_12(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Fiabilite'] !== null ? autolinker.link(feature.properties['Fiabilite'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date_evt'] !== null ? autolinker.link(feature.properties['Date_evt'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Intensite_'] !== null ? autolinker.link(feature.properties['Intensite_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Identifian'] !== null ? autolinker.link(feature.properties['Identifian'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_IntensitpicentralesurlchelleMSK1964_12_0(feature) {
+            switch(String(feature.properties['Intensite_'])) {
+                case '4':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '4.5':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 3.2,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '5':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '5.5':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 5.2,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '6':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '6.5':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '7':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 9.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '7.5':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '8':
+                    return {
+                pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_IntensitpicentralesurlchelleMSK1964_12');
+        map.getPane('pane_IntensitpicentralesurlchelleMSK1964_12').style.zIndex = 412;
+        map.getPane('pane_IntensitpicentralesurlchelleMSK1964_12').style['mix-blend-mode'] = 'normal';
+        var layer_IntensitpicentralesurlchelleMSK1964_12 = new L.geoJson(json_IntensitpicentralesurlchelleMSK1964_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_IntensitpicentralesurlchelleMSK1964_12',
+            layerName: 'layer_IntensitpicentralesurlchelleMSK1964_12',
+            pane: 'pane_IntensitpicentralesurlchelleMSK1964_12',
+            onEachFeature: pop_IntensitpicentralesurlchelleMSK1964_12,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_IntensitpicentralesurlchelleMSK1964_12_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_IntensitpicentralesurlchelleMSK1964_12);
+        function pop_Stationsmeteopredictionavalanche_13(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POSTE'] !== null ? autolinker.link(feature.properties['POSTE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NUM_SYNOPT'] !== null ? autolinker.link(feature.properties['NUM_SYNOPT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COMMUNE'] !== null ? autolinker.link(feature.properties['COMMUNE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_REDUIT'] !== null ? autolinker.link(feature.properties['NOM_REDUIT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LIEU_DIT'] !== null ? autolinker.link(feature.properties['LIEU_DIT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MASSIF_PRA'] !== null ? autolinker.link(feature.properties['MASSIF_PRA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ALTITUDE'] !== null ? autolinker.link(feature.properties['ALTITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['EXPOSITION'] !== null ? autolinker.link(feature.properties['EXPOSITION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PENTE'] !== null ? autolinker.link(feature.properties['PENTE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAMBERTX'] !== null ? autolinker.link(feature.properties['LAMBERTX'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAMBERTX_2'] !== null ? autolinker.link(feature.properties['LAMBERTX_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAMBERTY'] !== null ? autolinker.link(feature.properties['LAMBERTY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LAMBERTY_2'] !== null ? autolinker.link(feature.properties['LAMBERTY_2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LATITUDE'] !== null ? autolinker.link(feature.properties['LATITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LONGITUDE'] !== null ? autolinker.link(feature.properties['LONGITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TYPE_POSTE'] !== null ? autolinker.link(feature.properties['TYPE_POSTE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GESTION_PO'] !== null ? autolinker.link(feature.properties['GESTION_PO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GESTION_DO'] !== null ? autolinker.link(feature.properties['GESTION_DO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TYPE_NIVO'] !== null ? autolinker.link(feature.properties['TYPE_NIVO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_OUVER'] !== null ? autolinker.link(feature.properties['DATE_OUVER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_FERME'] !== null ? autolinker.link(feature.properties['DATE_FERME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_DEB_V'] !== null ? autolinker.link(feature.properties['DATE_DEB_V'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_FIN_V'] !== null ? autolinker.link(feature.properties['DATE_FIN_V'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_DEB_I'] !== null ? autolinker.link(feature.properties['DATE_DEB_I'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_FIN_I'] !== null ? autolinker.link(feature.properties['DATE_FIN_I'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_DEB_R'] !== null ? autolinker.link(feature.properties['DATE_DEB_R'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_FIN_R'] !== null ? autolinker.link(feature.properties['DATE_FIN_R'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_DEB_T'] !== null ? autolinker.link(feature.properties['DATE_DEB_T'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATE_FIN_T'] !== null ? autolinker.link(feature.properties['DATE_FIN_T'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PERIODE_FO'] !== null ? autolinker.link(feature.properties['PERIODE_FO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Stationsmeteopredictionavalanche_13_0() {
+            return {
+                pane: 'pane_Stationsmeteopredictionavalanche_13',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(100,9,121,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Stationsmeteopredictionavalanche_13');
+        map.getPane('pane_Stationsmeteopredictionavalanche_13').style.zIndex = 413;
+        map.getPane('pane_Stationsmeteopredictionavalanche_13').style['mix-blend-mode'] = 'normal';
+        var layer_Stationsmeteopredictionavalanche_13 = new L.geoJson(json_Stationsmeteopredictionavalanche_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Stationsmeteopredictionavalanche_13',
+            layerName: 'layer_Stationsmeteopredictionavalanche_13',
+            pane: 'pane_Stationsmeteopredictionavalanche_13',
+            onEachFeature: pop_Stationsmeteopredictionavalanche_13,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Stationsmeteopredictionavalanche_13_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Stationsmeteopredictionavalanche_13);
+        function pop_NombredvnementsarrtsCATNATparcommune_14(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SURF_KM2'] !== null ? autolinker.link(feature.properties['SURF_KM2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredvnementsarrtsCATNATparcommune_14_0(feature) {
+            switch(String(feature.properties['NOMBRE'])) {
+                case '1':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,238,252,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,190,227,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(167,124,182,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '4':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(109,56,127,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '5':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(56,0,74,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '6':
+                    return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_14',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(28,0,38,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_NombredvnementsarrtsCATNATparcommune_14');
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_14').style.zIndex = 414;
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_14').style['mix-blend-mode'] = 'normal';
+        var layer_NombredvnementsarrtsCATNATparcommune_14 = new L.geoJson(json_NombredvnementsarrtsCATNATparcommune_14, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredvnementsarrtsCATNATparcommune_14',
+            layerName: 'layer_NombredvnementsarrtsCATNATparcommune_14',
+            pane: 'pane_NombredvnementsarrtsCATNATparcommune_14',
+            onEachFeature: pop_NombredvnementsarrtsCATNATparcommune_14,
+            style: style_NombredvnementsarrtsCATNATparcommune_14_0,
+        });
+        bounds_group.addLayer(layer_NombredvnementsarrtsCATNATparcommune_14);
+        function pop_BDIFF_FeuForet_Evmnts_Alpes_2154_15(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_REG'] !== null ? autolinker.link(feature.properties['NOM_REG'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['IFtotal_ha'] !== null ? autolinker.link(feature.properties['IFtotal_ha'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BDIFF_FeuForet_Evmnts_Alpes_2154_15_0() {
+            return {
+                pane: 'pane_BDIFF_FeuForet_Evmnts_Alpes_2154_15',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,113,88,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_BDIFF_FeuForet_Evmnts_Alpes_2154_15');
+        map.getPane('pane_BDIFF_FeuForet_Evmnts_Alpes_2154_15').style.zIndex = 415;
+        map.getPane('pane_BDIFF_FeuForet_Evmnts_Alpes_2154_15').style['mix-blend-mode'] = 'normal';
+        var layer_BDIFF_FeuForet_Evmnts_Alpes_2154_15 = new L.geoJson(json_BDIFF_FeuForet_Evmnts_Alpes_2154_15, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BDIFF_FeuForet_Evmnts_Alpes_2154_15',
+            layerName: 'layer_BDIFF_FeuForet_Evmnts_Alpes_2154_15',
+            pane: 'pane_BDIFF_FeuForet_Evmnts_Alpes_2154_15',
+            onEachFeature: pop_BDIFF_FeuForet_Evmnts_Alpes_2154_15,
+            style: style_BDIFF_FeuForet_Evmnts_Alpes_2154_15_0,
+        });
+        bounds_group.addLayer(layer_BDIFF_FeuForet_Evmnts_Alpes_2154_15);
+        function pop_GASPAR_FeuForet_DDRM_Alpes_2154_16(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_FeuForet_DDRM_Alpes_2154_16_0() {
+            return {
+                pane: 'pane_GASPAR_FeuForet_DDRM_Alpes_2154_16',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(38,138,43,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_FeuForet_DDRM_Alpes_2154_16');
+        map.getPane('pane_GASPAR_FeuForet_DDRM_Alpes_2154_16').style.zIndex = 416;
+        map.getPane('pane_GASPAR_FeuForet_DDRM_Alpes_2154_16').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_FeuForet_DDRM_Alpes_2154_16 = new L.geoJson(json_GASPAR_FeuForet_DDRM_Alpes_2154_16, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_FeuForet_DDRM_Alpes_2154_16',
+            layerName: 'layer_GASPAR_FeuForet_DDRM_Alpes_2154_16',
+            pane: 'pane_GASPAR_FeuForet_DDRM_Alpes_2154_16',
+            onEachFeature: pop_GASPAR_FeuForet_DDRM_Alpes_2154_16,
+            style: style_GASPAR_FeuForet_DDRM_Alpes_2154_16_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_FeuForet_DDRM_Alpes_2154_16);
+        function pop_GEOIDES_Facteur_risque_incendie_Alpes_2154_17(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Surf_foret'] !== null ? autolinker.link(feature.properties['Surf_foret'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Histor_IF'] !== null ? autolinker.link(feature.properties['Histor_IF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Indic_hist'] !== null ? autolinker.link(feature.properties['Indic_hist'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Indic_fore'] !== null ? autolinker.link(feature.properties['Indic_fore'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Indic_dens'] !== null ? autolinker.link(feature.properties['Indic_dens'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Risque_IF'] !== null ? autolinker.link(feature.properties['Risque_IF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GEOIDES_Facteur_risque_incendie_Alpes_2154_17_0() {
+            return {
+                pane: 'pane_GEOIDES_Facteur_risque_incendie_Alpes_2154_17',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(243,166,178,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GEOIDES_Facteur_risque_incendie_Alpes_2154_17');
+        map.getPane('pane_GEOIDES_Facteur_risque_incendie_Alpes_2154_17').style.zIndex = 417;
+        map.getPane('pane_GEOIDES_Facteur_risque_incendie_Alpes_2154_17').style['mix-blend-mode'] = 'normal';
+        var layer_GEOIDES_Facteur_risque_incendie_Alpes_2154_17 = new L.geoJson(json_GEOIDES_Facteur_risque_incendie_Alpes_2154_17, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GEOIDES_Facteur_risque_incendie_Alpes_2154_17',
+            layerName: 'layer_GEOIDES_Facteur_risque_incendie_Alpes_2154_17',
+            pane: 'pane_GEOIDES_Facteur_risque_incendie_Alpes_2154_17',
+            onEachFeature: pop_GEOIDES_Facteur_risque_incendie_Alpes_2154_17,
+            style: style_GEOIDES_Facteur_risque_incendie_Alpes_2154_17_0,
+        });
+        bounds_group.addLayer(layer_GEOIDES_Facteur_risque_incendie_Alpes_2154_17);
+        function pop_NombredvnementsarrtsCATNATparcommune_18(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE</th>\
+                        <td>' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SURF_KM2</th>\
+                        <td>' + (feature.properties['SURF_KM2'] !== null ? autolinker.link(feature.properties['SURF_KM2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredvnementsarrtsCATNATparcommune_18_0(feature) {
+            if (feature.properties['NOMBRE'] >= 1.000000 && feature.properties['NOMBRE'] <= 5.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_18',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,251,255,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['NOMBRE'] >= 5.000000 && feature.properties['NOMBRE'] <= 10.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_18',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(176,210,232,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['NOMBRE'] >= 10.000000 && feature.properties['NOMBRE'] <= 15.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_18',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(62,142,196,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['NOMBRE'] >= 15.000000 && feature.properties['NOMBRE'] <= 19.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_18',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(8,48,107,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_NombredvnementsarrtsCATNATparcommune_18');
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_18').style.zIndex = 418;
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_18').style['mix-blend-mode'] = 'normal';
+        var layer_NombredvnementsarrtsCATNATparcommune_18 = new L.geoJson(json_NombredvnementsarrtsCATNATparcommune_18, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredvnementsarrtsCATNATparcommune_18',
+            layerName: 'layer_NombredvnementsarrtsCATNATparcommune_18',
+            pane: 'pane_NombredvnementsarrtsCATNATparcommune_18',
+            onEachFeature: pop_NombredvnementsarrtsCATNATparcommune_18,
+            style: style_NombredvnementsarrtsCATNATparcommune_18_0,
+        });
+        bounds_group.addLayer(layer_NombredvnementsarrtsCATNATparcommune_18);
+        function pop_BRGM_Inondation_RemonteesNappe_Alpes_2154_19(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CLASSE'] !== null ? autolinker.link(feature.properties['CLASSE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FIAB_MNT'] !== null ? autolinker.link(feature.properties['FIAB_MNT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FIAB_ESO'] !== null ? autolinker.link(feature.properties['FIAB_ESO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FIAB_TOT'] !== null ? autolinker.link(feature.properties['FIAB_TOT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_BRGM_Inondation_RemonteesNappe_Alpes_2154_19_0(feature) {
+            switch(String(feature.properties['CLASSE'])) {
+                case 'Pas de débordement de nappe ni d\'inondation de cave':
+                    return {
+                pane: 'pane_BRGM_Inondation_RemonteesNappe_Alpes_2154_19',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,226,238,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Zones potentiellement sujettes aux débordements de nappe':
+                    return {
+                pane: 'pane_BRGM_Inondation_RemonteesNappe_Alpes_2154_19',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(19,96,145,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Zones potentiellement sujettes aux inondations de cave':
+                    return {
+                pane: 'pane_BRGM_Inondation_RemonteesNappe_Alpes_2154_19',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(12,62,93,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_BRGM_Inondation_RemonteesNappe_Alpes_2154_19');
+        map.getPane('pane_BRGM_Inondation_RemonteesNappe_Alpes_2154_19').style.zIndex = 419;
+        map.getPane('pane_BRGM_Inondation_RemonteesNappe_Alpes_2154_19').style['mix-blend-mode'] = 'normal';
+        var layer_BRGM_Inondation_RemonteesNappe_Alpes_2154_19 = new L.geoJson(json_BRGM_Inondation_RemonteesNappe_Alpes_2154_19, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_BRGM_Inondation_RemonteesNappe_Alpes_2154_19',
+            layerName: 'layer_BRGM_Inondation_RemonteesNappe_Alpes_2154_19',
+            pane: 'pane_BRGM_Inondation_RemonteesNappe_Alpes_2154_19',
+            onEachFeature: pop_BRGM_Inondation_RemonteesNappe_Alpes_2154_19,
+            style: style_BRGM_Inondation_RemonteesNappe_Alpes_2154_19_0,
+        });
+        bounds_group.addLayer(layer_BRGM_Inondation_RemonteesNappe_Alpes_2154_19);
+        function pop_GASPAR_Inondation_DDRM_Alpes_2154_20(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SURF_KM2'] !== null ? autolinker.link(feature.properties['SURF_KM2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_Inondation_DDRM_Alpes_2154_20_0(feature) {
+            switch(String(feature.properties['lib_risque'])) {
+                case 'Inondation':
+                    return {
+                pane: 'pane_GASPAR_Inondation_DDRM_Alpes_2154_20',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,226,238,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Inondation - Par une crue Ã  dÃ©bordement lent de cours dâ€™eau':
+                    return {
+                pane: 'pane_GASPAR_Inondation_DDRM_Alpes_2154_20',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,226,238,0.5058823529411764)',
+                interactive: true,
+            }
+                    break;
+                case 'Inondation - Par une crue torrentielle ou Ã  montÃ©e rapide de cours dâ€™eau':
+                    return {
+                pane: 'pane_GASPAR_Inondation_DDRM_Alpes_2154_20',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(153,188,211,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_GASPAR_Inondation_DDRM_Alpes_2154_20');
+        map.getPane('pane_GASPAR_Inondation_DDRM_Alpes_2154_20').style.zIndex = 420;
+        map.getPane('pane_GASPAR_Inondation_DDRM_Alpes_2154_20').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_Inondation_DDRM_Alpes_2154_20 = new L.geoJson(json_GASPAR_Inondation_DDRM_Alpes_2154_20, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_Inondation_DDRM_Alpes_2154_20',
+            layerName: 'layer_GASPAR_Inondation_DDRM_Alpes_2154_20',
+            pane: 'pane_GASPAR_Inondation_DDRM_Alpes_2154_20',
+            onEachFeature: pop_GASPAR_Inondation_DDRM_Alpes_2154_20,
+            style: style_GASPAR_Inondation_DDRM_Alpes_2154_20_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_Inondation_DDRM_Alpes_2154_20);
+        function pop_GASPAR_Avalanche_DDRM_Alpes_2154_21(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SURF_KM2'] !== null ? autolinker.link(feature.properties['SURF_KM2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_Avalanche_DDRM_Alpes_2154_21_0() {
+            return {
+                pane: 'pane_GASPAR_Avalanche_DDRM_Alpes_2154_21',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(110,110,110,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_Avalanche_DDRM_Alpes_2154_21');
+        map.getPane('pane_GASPAR_Avalanche_DDRM_Alpes_2154_21').style.zIndex = 421;
+        map.getPane('pane_GASPAR_Avalanche_DDRM_Alpes_2154_21').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_Avalanche_DDRM_Alpes_2154_21 = new L.geoJson(json_GASPAR_Avalanche_DDRM_Alpes_2154_21, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_Avalanche_DDRM_Alpes_2154_21',
+            layerName: 'layer_GASPAR_Avalanche_DDRM_Alpes_2154_21',
+            pane: 'pane_GASPAR_Avalanche_DDRM_Alpes_2154_21',
+            onEachFeature: pop_GASPAR_Avalanche_DDRM_Alpes_2154_21,
+            style: style_GASPAR_Avalanche_DDRM_Alpes_2154_21_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_Avalanche_DDRM_Alpes_2154_21);
+        function pop_CLPA_photo_22(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ZONPI_ID'] !== null ? autolinker.link(feature.properties['ZONPI_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE'] !== null ? autolinker.link(feature.properties['CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DEP'] !== null ? autolinker.link(feature.properties['DEP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COM'] !== null ? autolinker.link(feature.properties['COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DDMAJ'] !== null ? autolinker.link(feature.properties['DDMAJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AGTMAJ'] !== null ? autolinker.link(feature.properties['AGTMAJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MOTIF'] !== null ? autolinker.link(feature.properties['MOTIF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CLPA_photo_22_0() {
+            return {
+                pane: 'pane_CLPA_photo_22',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CLPA_photo_22');
+        map.getPane('pane_CLPA_photo_22').style.zIndex = 422;
+        map.getPane('pane_CLPA_photo_22').style['mix-blend-mode'] = 'normal';
+        var layer_CLPA_photo_22 = new L.geoJson(json_CLPA_photo_22, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CLPA_photo_22',
+            layerName: 'layer_CLPA_photo_22',
+            pane: 'pane_CLPA_photo_22',
+            onEachFeature: pop_CLPA_photo_22,
+            style: style_CLPA_photo_22_0,
+        });
+        bounds_group.addLayer(layer_CLPA_photo_22);
+        function pop_CLPA_temoignage_23(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODE'] !== null ? autolinker.link(feature.properties['CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DEP'] !== null ? autolinker.link(feature.properties['DEP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COM'] !== null ? autolinker.link(feature.properties['COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NUM'] !== null ? autolinker.link(feature.properties['NUM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DATEV'] !== null ? autolinker.link(feature.properties['DATEV'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DDMAJ'] !== null ? autolinker.link(feature.properties['DDMAJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AGTMAJ'] !== null ? autolinker.link(feature.properties['AGTMAJ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SOURCE'] !== null ? autolinker.link(feature.properties['SOURCE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MOTIF'] !== null ? autolinker.link(feature.properties['MOTIF'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CLPA_temoignage_23_0() {
+            return {
+                pane: 'pane_CLPA_temoignage_23',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CLPA_temoignage_23');
+        map.getPane('pane_CLPA_temoignage_23').style.zIndex = 423;
+        map.getPane('pane_CLPA_temoignage_23').style['mix-blend-mode'] = 'normal';
+        var layer_CLPA_temoignage_23 = new L.geoJson(json_CLPA_temoignage_23, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CLPA_temoignage_23',
+            layerName: 'layer_CLPA_temoignage_23',
+            pane: 'pane_CLPA_temoignage_23',
+            onEachFeature: pop_CLPA_temoignage_23,
+            style: style_CLPA_temoignage_23_0,
+        });
+        bounds_group.addLayer(layer_CLPA_temoignage_23);
+        function pop_CLPA_Avalanche_Ouvrages_Alpes_2154_24(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WZON_ID'] !== null ? autolinker.link(feature.properties['WZON_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['date_int'] !== null ? autolinker.link(feature.properties['date_int'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Code'] !== null ? autolinker.link(feature.properties['Code'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Dep'] !== null ? autolinker.link(feature.properties['Dep'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Com'] !== null ? autolinker.link(feature.properties['Com'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CLPA_Avalanche_Ouvrages_Alpes_2154_24_0() {
+            return {
+                pane: 'pane_CLPA_Avalanche_Ouvrages_Alpes_2154_24',
+                radius: 2.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,1,13,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CLPA_Avalanche_Ouvrages_Alpes_2154_24');
+        map.getPane('pane_CLPA_Avalanche_Ouvrages_Alpes_2154_24').style.zIndex = 424;
+        map.getPane('pane_CLPA_Avalanche_Ouvrages_Alpes_2154_24').style['mix-blend-mode'] = 'normal';
+        var layer_CLPA_Avalanche_Ouvrages_Alpes_2154_24 = new L.geoJson(json_CLPA_Avalanche_Ouvrages_Alpes_2154_24, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CLPA_Avalanche_Ouvrages_Alpes_2154_24',
+            layerName: 'layer_CLPA_Avalanche_Ouvrages_Alpes_2154_24',
+            pane: 'pane_CLPA_Avalanche_Ouvrages_Alpes_2154_24',
+            onEachFeature: pop_CLPA_Avalanche_Ouvrages_Alpes_2154_24,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CLPA_Avalanche_Ouvrages_Alpes_2154_24_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CLPA_Avalanche_Ouvrages_Alpes_2154_24);
+        function pop_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25_0() {
+            return {
+                pane: 'pane_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(200,118,11,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25');
+        map.getPane('pane_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25').style.zIndex = 425;
+        map.getPane('pane_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25 = new L.geoJson(json_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25',
+            layerName: 'layer_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25',
+            pane: 'pane_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25',
+            onEachFeature: pop_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25,
+            style: style_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25);
+        function pop_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26_0() {
+            return {
+                pane: 'pane_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,153,14,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26');
+        map.getPane('pane_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26').style.zIndex = 426;
+        map.getPane('pane_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26 = new L.geoJson(json_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26',
+            layerName: 'layer_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26',
+            pane: 'pane_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26',
+            onEachFeature: pop_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26,
+            style: style_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26);
+        function pop_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27_0() {
+            return {
+                pane: 'pane_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,205,136,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27');
+        map.getPane('pane_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27').style.zIndex = 427;
+        map.getPane('pane_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27 = new L.geoJson(json_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27',
+            layerName: 'layer_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27',
+            pane: 'pane_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27',
+            onEachFeature: pop_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27,
+            style: style_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27);
+        function pop_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28_0() {
+            return {
+                pane: 'pane_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,232,200,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28');
+        map.getPane('pane_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28').style.zIndex = 428;
+        map.getPane('pane_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28 = new L.geoJson(json_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28',
+            layerName: 'layer_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28',
+            pane: 'pane_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28',
+            onEachFeature: pop_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28,
+            style: style_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28);
+        function pop_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SUPERFICIE'] !== null ? autolinker.link(feature.properties['SUPERFICIE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lib_risque'] !== null ? autolinker.link(feature.properties['lib_risque'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29_0() {
+            return {
+                pane: 'pane_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,249,240,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29');
+        map.getPane('pane_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29').style.zIndex = 429;
+        map.getPane('pane_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29').style['mix-blend-mode'] = 'normal';
+        var layer_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29 = new L.geoJson(json_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29',
+            layerName: 'layer_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29',
+            pane: 'pane_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29',
+            onEachFeature: pop_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29,
+            style: style_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29_0,
+        });
+        bounds_group.addLayer(layer_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29);
+        function pop_NombredvnementsarrtsCATNATparcommune_30(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INSEE_COM'] !== null ? autolinker.link(feature.properties['INSEE_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOM_COM'] !== null ? autolinker.link(feature.properties['NOM_COM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POPULATION'] !== null ? autolinker.link(feature.properties['POPULATION'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMBRE'] !== null ? autolinker.link(feature.properties['NOMBRE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SURF_KM2'] !== null ? autolinker.link(feature.properties['SURF_KM2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DENSITE'] !== null ? autolinker.link(feature.properties['DENSITE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredvnementsarrtsCATNATparcommune_30_0(feature) {
+            if (feature.properties['NOMBRE'] >= 1.000000 && feature.properties['NOMBRE'] <= 5.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_30',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,212,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['NOMBRE'] >= 5.000000 && feature.properties['NOMBRE'] <= 10.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_30',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,196,108,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['NOMBRE'] >= 10.000000 && feature.properties['NOMBRE'] <= 15.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_30',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(230,114,23,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['NOMBRE'] >= 15.000000 && feature.properties['NOMBRE'] <= 16.000000 ) {
+                return {
+                pane: 'pane_NombredvnementsarrtsCATNATparcommune_30',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(153,52,4,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_NombredvnementsarrtsCATNATparcommune_30');
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_30').style.zIndex = 430;
+        map.getPane('pane_NombredvnementsarrtsCATNATparcommune_30').style['mix-blend-mode'] = 'normal';
+        var layer_NombredvnementsarrtsCATNATparcommune_30 = new L.geoJson(json_NombredvnementsarrtsCATNATparcommune_30, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredvnementsarrtsCATNATparcommune_30',
+            layerName: 'layer_NombredvnementsarrtsCATNATparcommune_30',
+            pane: 'pane_NombredvnementsarrtsCATNATparcommune_30',
+            onEachFeature: pop_NombredvnementsarrtsCATNATparcommune_30,
+            style: style_NombredvnementsarrtsCATNATparcommune_30_0,
+        });
+        bounds_group.addLayer(layer_NombredvnementsarrtsCATNATparcommune_30);
+        function pop_NombredeglissementdeterrainparcommuneBDMVT_31(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['num_insee'] !== null ? autolinker.link(feature.properties['num_insee'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['commune'] !== null ? autolinker.link(feature.properties['commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['typeMvt'] !== null ? autolinker.link(feature.properties['typeMvt'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleTyp'] !== null ? autolinker.link(feature.properties['libelleTyp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleFia'] !== null ? autolinker.link(feature.properties['libelleFia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredeglissementdeterrainparcommuneBDMVT_31_0(feature) {
+            if (feature.properties['Nombre'] >= 1.000000 && feature.properties['Nombre'] <= 2.000000 ) {
+                return {
+                pane: 'pane_NombredeglissementdeterrainparcommuneBDMVT_31',
+                radius: 1.8,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 2.000000 && feature.properties['Nombre'] <= 4.000000 ) {
+                return {
+                pane: 'pane_NombredeglissementdeterrainparcommuneBDMVT_31',
+                radius: 2.4,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 4.000000 && feature.properties['Nombre'] <= 6.000000 ) {
+                return {
+                pane: 'pane_NombredeglissementdeterrainparcommuneBDMVT_31',
+                radius: 3.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 6.000000 && feature.properties['Nombre'] <= 10.000000 ) {
+                return {
+                pane: 'pane_NombredeglissementdeterrainparcommuneBDMVT_31',
+                radius: 3.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 10.000000 && feature.properties['Nombre'] <= 34.000000 ) {
+                return {
+                pane: 'pane_NombredeglissementdeterrainparcommuneBDMVT_31',
+                radius: 4.2,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_NombredeglissementdeterrainparcommuneBDMVT_31');
+        map.getPane('pane_NombredeglissementdeterrainparcommuneBDMVT_31').style.zIndex = 431;
+        map.getPane('pane_NombredeglissementdeterrainparcommuneBDMVT_31').style['mix-blend-mode'] = 'normal';
+        var layer_NombredeglissementdeterrainparcommuneBDMVT_31 = new L.geoJson(json_NombredeglissementdeterrainparcommuneBDMVT_31, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredeglissementdeterrainparcommuneBDMVT_31',
+            layerName: 'layer_NombredeglissementdeterrainparcommuneBDMVT_31',
+            pane: 'pane_NombredeglissementdeterrainparcommuneBDMVT_31',
+            onEachFeature: pop_NombredeglissementdeterrainparcommuneBDMVT_31,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_NombredeglissementdeterrainparcommuneBDMVT_31_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_NombredeglissementdeterrainparcommuneBDMVT_31);
+        function pop_NombredboulementparcommuneBDMVT_32(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['num_insee'] !== null ? autolinker.link(feature.properties['num_insee'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['commune'] !== null ? autolinker.link(feature.properties['commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['typeMvt'] !== null ? autolinker.link(feature.properties['typeMvt'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleTyp'] !== null ? autolinker.link(feature.properties['libelleTyp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleFia'] !== null ? autolinker.link(feature.properties['libelleFia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredboulementparcommuneBDMVT_32_0(feature) {
+            if (feature.properties['Nombre'] >= 1.000000 && feature.properties['Nombre'] <= 2.000000 ) {
+                return {
+                pane: 'pane_NombredboulementparcommuneBDMVT_32',
+                radius: 1.8,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 2.000000 && feature.properties['Nombre'] <= 3.000000 ) {
+                return {
+                pane: 'pane_NombredboulementparcommuneBDMVT_32',
+                radius: 2.4,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 3.000000 && feature.properties['Nombre'] <= 6.000000 ) {
+                return {
+                pane: 'pane_NombredboulementparcommuneBDMVT_32',
+                radius: 3.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 6.000000 && feature.properties['Nombre'] <= 10.000000 ) {
+                return {
+                pane: 'pane_NombredboulementparcommuneBDMVT_32',
+                radius: 3.6,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 10.000000 && feature.properties['Nombre'] <= 41.000000 ) {
+                return {
+                pane: 'pane_NombredboulementparcommuneBDMVT_32',
+                radius: 4.2,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_NombredboulementparcommuneBDMVT_32');
+        map.getPane('pane_NombredboulementparcommuneBDMVT_32').style.zIndex = 432;
+        map.getPane('pane_NombredboulementparcommuneBDMVT_32').style['mix-blend-mode'] = 'normal';
+        var layer_NombredboulementparcommuneBDMVT_32 = new L.geoJson(json_NombredboulementparcommuneBDMVT_32, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredboulementparcommuneBDMVT_32',
+            layerName: 'layer_NombredboulementparcommuneBDMVT_32',
+            pane: 'pane_NombredboulementparcommuneBDMVT_32',
+            onEachFeature: pop_NombredboulementparcommuneBDMVT_32,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_NombredboulementparcommuneBDMVT_32_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_NombredboulementparcommuneBDMVT_32);
+        function pop_NombredecouledeboueparcommuneBDMVT_33(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['num_insee'] !== null ? autolinker.link(feature.properties['num_insee'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['commune'] !== null ? autolinker.link(feature.properties['commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['typeMvt'] !== null ? autolinker.link(feature.properties['typeMvt'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleTyp'] !== null ? autolinker.link(feature.properties['libelleTyp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleFia'] !== null ? autolinker.link(feature.properties['libelleFia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredecouledeboueparcommuneBDMVT_33_0(feature) {
+            if (feature.properties['Nombre'] >= 1.000000 && feature.properties['Nombre'] <= 1.000000 ) {
+                return {
+                pane: 'pane_NombredecouledeboueparcommuneBDMVT_33',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 1.000000 && feature.properties['Nombre'] <= 3.000000 ) {
+                return {
+                pane: 'pane_NombredecouledeboueparcommuneBDMVT_33',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 3.000000 && feature.properties['Nombre'] <= 5.000000 ) {
+                return {
+                pane: 'pane_NombredecouledeboueparcommuneBDMVT_33',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 5.000000 && feature.properties['Nombre'] <= 10.000000 ) {
+                return {
+                pane: 'pane_NombredecouledeboueparcommuneBDMVT_33',
+                radius: 7.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Nombre'] >= 10.000000 && feature.properties['Nombre'] <= 23.000000 ) {
+                return {
+                pane: 'pane_NombredecouledeboueparcommuneBDMVT_33',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_NombredecouledeboueparcommuneBDMVT_33');
+        map.getPane('pane_NombredecouledeboueparcommuneBDMVT_33').style.zIndex = 433;
+        map.getPane('pane_NombredecouledeboueparcommuneBDMVT_33').style['mix-blend-mode'] = 'normal';
+        var layer_NombredecouledeboueparcommuneBDMVT_33 = new L.geoJson(json_NombredecouledeboueparcommuneBDMVT_33, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredecouledeboueparcommuneBDMVT_33',
+            layerName: 'layer_NombredecouledeboueparcommuneBDMVT_33',
+            pane: 'pane_NombredecouledeboueparcommuneBDMVT_33',
+            onEachFeature: pop_NombredecouledeboueparcommuneBDMVT_33,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_NombredecouledeboueparcommuneBDMVT_33_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_NombredecouledeboueparcommuneBDMVT_33);
+        function pop_NombredaffaissementparcommuneBDMVT_34(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['num_insee'] !== null ? autolinker.link(feature.properties['num_insee'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['commune'] !== null ? autolinker.link(feature.properties['commune'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['typeMvt'] !== null ? autolinker.link(feature.properties['typeMvt'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleTyp'] !== null ? autolinker.link(feature.properties['libelleTyp'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['libelleFia'] !== null ? autolinker.link(feature.properties['libelleFia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nombre'] !== null ? autolinker.link(feature.properties['Nombre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NombredaffaissementparcommuneBDMVT_34_0(feature) {
+            switch(String(feature.properties['Nombre'])) {
+                case '1':
+                    return {
+                pane: 'pane_NombredaffaissementparcommuneBDMVT_34',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_NombredaffaissementparcommuneBDMVT_34',
+                radius: 6.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_NombredaffaissementparcommuneBDMVT_34',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(127,73,7,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_NombredaffaissementparcommuneBDMVT_34');
+        map.getPane('pane_NombredaffaissementparcommuneBDMVT_34').style.zIndex = 434;
+        map.getPane('pane_NombredaffaissementparcommuneBDMVT_34').style['mix-blend-mode'] = 'normal';
+        var layer_NombredaffaissementparcommuneBDMVT_34 = new L.geoJson(json_NombredaffaissementparcommuneBDMVT_34, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NombredaffaissementparcommuneBDMVT_34',
+            layerName: 'layer_NombredaffaissementparcommuneBDMVT_34',
+            pane: 'pane_NombredaffaissementparcommuneBDMVT_34',
+            onEachFeature: pop_NombredaffaissementparcommuneBDMVT_34,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_NombredaffaissementparcommuneBDMVT_34_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_NombredaffaissementparcommuneBDMVT_34);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Nombre d\'affaissement par commune (BDMVT)<br /><table><tr><td style="text-align: center;"><img src="legend/NombredaffaissementparcommuneBDMVT_34_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/NombredaffaissementparcommuneBDMVT_34_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/NombredaffaissementparcommuneBDMVT_34_32.png" /></td><td>3</td></tr></table>': layer_NombredaffaissementparcommuneBDMVT_34,'Nombre de coulée de boue par commune (BDMVT)<br /><table><tr><td style="text-align: center;"><img src="legend/NombredecouledeboueparcommuneBDMVT_33_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/NombredecouledeboueparcommuneBDMVT_33_231.png" /></td><td>2 - 3</td></tr><tr><td style="text-align: center;"><img src="legend/NombredecouledeboueparcommuneBDMVT_33_352.png" /></td><td>3 - 5 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredecouledeboueparcommuneBDMVT_33_5103.png" /></td><td>5 - 10 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredecouledeboueparcommuneBDMVT_33_104.png" /></td><td>> 10</td></tr></table>': layer_NombredecouledeboueparcommuneBDMVT_33,'Nombre d\'éboulement par commune (BDMVT)<br /><table><tr><td style="text-align: center;"><img src="legend/NombredboulementparcommuneBDMVT_32_120.png" /></td><td>1 - 2 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredboulementparcommuneBDMVT_32_231.png" /></td><td>2 - 3 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredboulementparcommuneBDMVT_32_362.png" /></td><td>3 - 6 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredboulementparcommuneBDMVT_32_6103.png" /></td><td>6 - 10 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredboulementparcommuneBDMVT_32_104.png" /></td><td>> 10</td></tr></table>': layer_NombredboulementparcommuneBDMVT_32,'Nombre de glissement de terrain par commune (BDMVT)<br /><table><tr><td style="text-align: center;"><img src="legend/NombredeglissementdeterrainparcommuneBDMVT_31_120.png" /></td><td>1 - 2 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredeglissementdeterrainparcommuneBDMVT_31_241.png" /></td><td>2 - 4 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredeglissementdeterrainparcommuneBDMVT_31_462.png" /></td><td>4 - 6 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredeglissementdeterrainparcommuneBDMVT_31_6103.png" /></td><td>6 - 10 </td></tr><tr><td style="text-align: center;"><img src="legend/NombredeglissementdeterrainparcommuneBDMVT_31_104.png" /></td><td>> 10</td></tr></table>': layer_NombredeglissementdeterrainparcommuneBDMVT_31,'Nombre d\'évènements arrêtés CATNAT par commune<br /><table><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_30_150.png" /></td><td>1 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_30_5101.png" /></td><td>5 - 10</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_30_10152.png" /></td><td>10 - 15</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_30_15163.png" /></td><td>15 - 16</td></tr></table>': layer_NombredvnementsarrtsCATNATparcommune_30,'<img src="legend/GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29.png" /> GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154': layer_GASPAR_MvtTerrain_Affaissement_DDRM_Alpes_2154_29,'<img src="legend/GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28.png" /> GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154': layer_GASPAR_MvtTerrain_Eboulement_DDRM_Alpes_2154_28,'<img src="legend/GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27.png" /> GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154': layer_GASPAR_MvtTerrain_Glissement_DDRM_Alpes_2154_27,'<img src="legend/GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26.png" /> GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154': layer_GASPAR_MvtTerrain_Tassement_DDRM_Alpes_2154_26,'<img src="legend/GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25.png" /> GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154': layer_GASPAR_MvtTerrain_Mouvement_DDRM_Alpes_2154_25,'<img src="legend/CLPA_Avalanche_Ouvrages_Alpes_2154_24.png" /> CLPA_Avalanche_Ouvrages_Alpes_2154': layer_CLPA_Avalanche_Ouvrages_Alpes_2154_24,'<img src="legend/CLPA_temoignage_23.png" /> CLPA_temoignage': layer_CLPA_temoignage_23,'<img src="legend/CLPA_photo_22.png" /> CLPA_photo': layer_CLPA_photo_22,'<img src="legend/GASPAR_Avalanche_DDRM_Alpes_2154_21.png" /> GASPAR_Avalanche_DDRM_Alpes_2154': layer_GASPAR_Avalanche_DDRM_Alpes_2154_21,'GASPAR_Inondation_DDRM_Alpes_2154<br /><table><tr><td style="text-align: center;"><img src="legend/GASPAR_Inondation_DDRM_Alpes_2154_20_Inondation0.png" /></td><td>Inondation</td></tr><tr><td style="text-align: center;"><img src="legend/GASPAR_Inondation_DDRM_Alpes_2154_20_InondationParunecrueÃdÃbordementlentdecoursdâeau1.png" /></td><td>Inondation - Par une crue Ã  dÃ©bordement lent de cours dâ€™eau</td></tr><tr><td style="text-align: center;"><img src="legend/GASPAR_Inondation_DDRM_Alpes_2154_20_InondationParunecruetorrentielleouÃmontÃerapidedecoursdâeau2.png" /></td><td>Inondation - Par une crue torrentielle ou Ã  montÃ©e rapide de cours dâ€™eau</td></tr></table>': layer_GASPAR_Inondation_DDRM_Alpes_2154_20,'BRGM_Inondation_RemonteesNappe_Alpes_2154<br /><table><tr><td style="text-align: center;"><img src="legend/BRGM_Inondation_RemonteesNappe_Alpes_2154_19_Pasdedébordementdenappenidinondationdecave0.png" /></td><td>Pas de débordement de nappe ni d\'inondation de cave</td></tr><tr><td style="text-align: center;"><img src="legend/BRGM_Inondation_RemonteesNappe_Alpes_2154_19_Zonespotentiellementsujettesauxdébordementsdenappe1.png" /></td><td>Zones potentiellement sujettes aux débordements de nappe</td></tr><tr><td style="text-align: center;"><img src="legend/BRGM_Inondation_RemonteesNappe_Alpes_2154_19_Zonespotentiellementsujettesauxinondationsdecave2.png" /></td><td>Zones potentiellement sujettes aux inondations de cave</td></tr></table>': layer_BRGM_Inondation_RemonteesNappe_Alpes_2154_19,'Nombre d\'évènements arrêtés CATNAT par commune<br /><table><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_18_150.png" /></td><td>1 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_18_5101.png" /></td><td>5 - 10</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_18_10152.png" /></td><td>10 - 15</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_18_15193.png" /></td><td>15 - 19</td></tr></table>': layer_NombredvnementsarrtsCATNATparcommune_18,'<img src="legend/GEOIDES_Facteur_risque_incendie_Alpes_2154_17.png" /> GEOIDES_Facteur_risque_incendie_Alpes_2154': layer_GEOIDES_Facteur_risque_incendie_Alpes_2154_17,'<img src="legend/GASPAR_FeuForet_DDRM_Alpes_2154_16.png" /> GASPAR_FeuForet_DDRM_Alpes_2154': layer_GASPAR_FeuForet_DDRM_Alpes_2154_16,'<img src="legend/BDIFF_FeuForet_Evmnts_Alpes_2154_15.png" /> BDIFF_FeuForet_Evmnts_Alpes_2154': layer_BDIFF_FeuForet_Evmnts_Alpes_2154_15,'Nombre d\'évènements arrêtés CATNAT par commune<br /><table><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_14_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_14_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_14_32.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_14_43.png" /></td><td>4</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_14_54.png" /></td><td>5</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_14_65.png" /></td><td>6</td></tr></table>': layer_NombredvnementsarrtsCATNATparcommune_14,'<img src="legend/Stationsmeteopredictionavalanche_13.png" /> Stations meteo prediction avalanche ': layer_Stationsmeteopredictionavalanche_13,'Intensité épicentrale sur l\'échelle MSK 1964<br /><table><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_IV0.png" /></td><td>IV</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_IVV1.png" /></td><td>IV-V</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_V2.png" /></td><td>V</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_VVI3.png" /></td><td>V-VI</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_VI4.png" /></td><td>VI</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_VIVII5.png" /></td><td>VI-VII</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_VII6.png" /></td><td>VII</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_VIIVIII7.png" /></td><td>VII-VIII</td></tr><tr><td style="text-align: center;"><img src="legend/IntensitpicentralesurlchelleMSK1964_12_VIII8.png" /></td><td>VIII</td></tr></table>': layer_IntensitpicentralesurlchelleMSK1964_12,'Nombre d\'évènements arrêtés CATNAT par commune<br /><table><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_11_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_11_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_11_32.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/NombredvnementsarrtsCATNATparcommune_11_93.png" /></td><td>9</td></tr></table>': layer_NombredvnementsarrtsCATNATparcommune_11,'GASPAR_Seismes_DDRM_Alpes_2154<br /><table><tr><td style="text-align: center;"><img src="legend/GASPAR_Seismes_DDRM_Alpes_2154_10_SÃismezonedesismicite20.png" /></td><td>SÃ©isme zone de sismicite 2</td></tr><tr><td style="text-align: center;"><img src="legend/GASPAR_Seismes_DDRM_Alpes_2154_10_SÃismezonedesismicite31.png" /></td><td>SÃ©isme zone de sismicite 3</td></tr><tr><td style="text-align: center;"><img src="legend/GASPAR_Seismes_DDRM_Alpes_2154_10_SÃismezonedesismicite42.png" /></td><td>SÃ©isme zone de sismicite 4</td></tr></table>': layer_GASPAR_Seismes_DDRM_Alpes_2154_10,'<img src="legend/Communes_9.png" /> Communes': layer_Communes_9,'<img src="legend/Departements_8.png" /> Departements': layer_Departements_8,'<img src="legend/PARN_Emprise_Alpes_2154_7.png" /> PARN_Emprise_Alpes_2154': layer_PARN_Emprise_Alpes_2154_7,'<img src="legend/GASPAR_DICRIM_Alpes_2154_6.png" /> GASPAR_DICRIM_Alpes_2154': layer_GASPAR_DICRIM_Alpes_2154_6,'<img src="legend/GASPAR_PCS_Alpes_2154_5.png" /> GASPAR_PCS_Alpes_2154': layer_GASPAR_PCS_Alpes_2154_5,'<img src="legend/GEORISQUE_PAPI_Alpes_2154_4.png" /> GEORISQUE_PAPI_Alpes_2154': layer_GEORISQUE_PAPI_Alpes_2154_4,'<img src="legend/PARN_STePRIM_Alpes_2154_3.png" /> PARN_STePRIM_Alpes_2154': layer_PARN_STePRIM_Alpes_2154_3,'<img src="legend/PARN_TAGIRN_EPCI_Alpes_2154_2.png" /> PARN_TAGIRN_EPCI_Alpes_2154': layer_PARN_TAGIRN_EPCI_Alpes_2154_2,'<img src="legend/PARN_TAGIRN_PNR_Alpes_2154_1.png" /> PARN_TAGIRN_PNR_Alpes_2154': layer_PARN_TAGIRN_PNR_Alpes_2154_1,'<img src="legend/PARN_TAGIRN_Syndicat_bv_Alpes_2154_0.png" /> PARN_TAGIRN_Syndicat_bv_Alpes_2154': layer_PARN_TAGIRN_Syndicat_bv_Alpes_2154_0,}).addTo(map);
+        map.on("zoomend", function(){
+
+                if (map.hasLayer(layer_Departements_8)) {
+                    if (map.getZoom() <= 8 && map.getZoom() >= 11) {
+                        layer_Departements_8.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_Departements_8.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_Communes_9)) {
+                    if (map.getZoom() <= 11 && map.getZoom() >= 18) {
+                        layer_Communes_9.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_Communes_9.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        });
+        setBounds();
+        var i = 0;
+        layer_Departements_8.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOMDEP_MAJ'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NOMDEP_MAJ']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Departements_8'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_Communes_9.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['NOM_COM'] !== null?String('<div style="color: #000000; font-size: 10pt; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['NOM_COM']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Communes_9'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+                if (map.hasLayer(layer_Departements_8)) {
+                    if (map.getZoom() <= 8 && map.getZoom() >= 11) {
+                        layer_Departements_8.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_Departements_8.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+                if (map.hasLayer(layer_Communes_9)) {
+                    if (map.getZoom() <= 11 && map.getZoom() >= 18) {
+                        layer_Communes_9.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_Communes_9.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        resetLabels([layer_Departements_8,layer_Communes_9,layer_NombredvnementsarrtsCATNATparcommune_18]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Departements_8,layer_Communes_9,layer_NombredvnementsarrtsCATNATparcommune_18]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Departements_8,layer_Communes_9,layer_NombredvnementsarrtsCATNATparcommune_18]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Departements_8,layer_Communes_9,layer_NombredvnementsarrtsCATNATparcommune_18]);
+        });
+        </script>
+    </body>
+</html>
